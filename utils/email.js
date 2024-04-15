@@ -1,24 +1,33 @@
-const nodemailer = require("nodemailer");
+require('dotenv').config(); // Charger les variables d'environnement depuis le fichier .env
+
+const nodemailer = require('nodemailer');
 
 const sendEmail = async (options) => {
-  // 1) Create a transporter :
-  var transport = nodemailer.createTransport({
-    host: process.env.EmailMailer,
-    port: process.env.PORTMAILER,
+  const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
     auth: {
-      user: process.env.USERMAILER,
-      pass: process.env.PASSWORDMAILER,
-    },
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
   });
-  // 2) Define the email options :
+
   const mailOptions = {
-    from: "Nidhal Boumaiza <Nidhalbmz123@gmail.com>",
+    from: process.env.EMAIL_USER,
     to: options.email,
     subject: options.subject,
     text: options.message,
-    attachments: options.attachments,
+    attachments: options.attachments
   };
-  await transport.sendMail(mailOptions);
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('E-mail envoyé avec succès :', info);
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
+    throw new Error("Erreur lors de l'envoi de l'e-mail.");
+  }
 };
 
 module.exports = sendEmail;
+

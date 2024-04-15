@@ -1,4 +1,4 @@
-const Condidature = require('../models/condidatureModel');
+const Candidature = require('../models/condidatureModel');
 const User = require('../models/userModel');
 const sendEmail = require('../utils/email');
 const catchAsync = require('../utils/catchAsync');
@@ -15,7 +15,7 @@ exports.createCandidature = catchAsync(async (req, res, next) => {
   }
 
   // Créer la candidature
-  const candidature = await Condidature.create({ stagiaire: stagiaireId });
+  const candidature = await Candidature.create({ stagiaire: stagiaireId });
 
   res.status(201).json({ status: 'success', data: { candidature } });
 });
@@ -25,7 +25,7 @@ exports.acceptCandidature = catchAsync(async (req, res, next) => {
   const { candidatureId } = req.params;
 
   // Mettre à jour le statut de la candidature
-  const updatedCandidature = await Condidature.findByIdAndUpdate(
+  const updatedCandidature = await Candidature.findByIdAndUpdate(
     candidatureId,
     { status: 'accepted', assistantNotified: false },
     { new: true }
@@ -61,7 +61,7 @@ exports.rejectCandidature = catchAsync(async (req, res, next) => {
   const { candidatureId } = req.params;
 
   // Mettre à jour le statut de la candidature
-  const updatedCandidature = await Condidature.findByIdAndUpdate(
+  const updatedCandidature = await Candidature.findByIdAndUpdate(
     candidatureId,
     { status: 'rejected' },
     { new: true }
@@ -76,15 +76,12 @@ exports.rejectCandidature = catchAsync(async (req, res, next) => {
 
 // Obtenir la liste de toutes les candidatures
 exports.getAllCandidatures = catchAsync(async (req, res, next) => {
-  const candidatures = await Condidature.find().populate('stagiaire', 'fullName email');
+  const candidatures = await Candidature.find().populate('stagiaire', 'fullName email');
   res.status(200).json({ status: 'success', data: { candidatures } });
 });
 
 // Obtenir la liste des stagiaires acceptés
 exports.getStagiairesAcceptes = catchAsync(async (req, res, next) => {
-  const stagiairesAcceptes = await Condidature.find({ status: 'accepted' }).populate('stagiaire', 'fullName email');
+  const stagiairesAcceptes = await Candidature.find({ status: 'accepted' }).populate('stagiaire', 'fullName email');
   res.status(200).json({ status: 'success', data: { stagiairesAcceptes } });
 });
-
-
-

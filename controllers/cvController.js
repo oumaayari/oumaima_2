@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const CV = require('../models/cvModel'); 
-console.log(CV);
+
 
 // Créer un nouveau CV
 exports.createCV = async (req, res, next) => {

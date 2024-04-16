@@ -17,5 +17,5 @@ const profilSchema = new mongoose.Schema({
   creationDate: { type: Date, default: Date.now }
 });
 
-const Profil = mongoose.model('Profil', profilSchema);
+const Profil = mongoose.model("Profil", profilSchema);
 module.exports = Profil;

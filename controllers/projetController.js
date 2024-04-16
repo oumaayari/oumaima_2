@@ -4,7 +4,14 @@ const AppError = require('../utils/appError');
 
 // Créer un nouveau projet
 exports.createProjet = catchAsync(async (req, res, next) => {
-  const newProjet = await Projet.create(req.body);
+  const { organisation, title, description, date} = req.body;
+  
+  const newProjet = await Projet.create({
+    organisation,
+    title,
+    description,
+    date: date ? new Date(date) : Date.now()
+  });
 
   res.status(201).json({
     status: 'success',
@@ -67,3 +74,4 @@ exports.deleteProjet = catchAsync(async (req, res, next) => {
     data: null
   });
 });
+

@@ -29,6 +29,7 @@ const experienceRouter = require("./routes/experienceRouter");
 const certificationRouter = require("./routes/certificationRouter");
 const skillRouter = require("./routes/skillRouter");
 const tacheRouter = require("./routes/tacheRouter");
+const labRouter = require("./routes/labRouter");
 
 //------------------------------
 app.use(cors());
@@ -73,6 +74,7 @@ app.use("/experiences", experienceRouter);
 app.use("/api/v1/certifications", certificationRouter);
 app.use("/api/v1/skills", skillRouter);
 app.use("/api/v1/taches", tacheRouter);
+app.use("/api/v1/labs", labRouter);
 
 
 
